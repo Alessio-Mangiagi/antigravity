@@ -1,0 +1,49 @@
+name: route_checklist
+description: Route optimization and auto-checklist app for iOS and Android.
+version: 1.0.0+1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^2.4.9
+
+  # Maps
+  google_maps_flutter: ^2.6.0
+
+  # Location & permissions
+  geolocator: ^11.0.0
+  permission_handler: ^11.3.1
+
+  # Geocoding / Places (address → lat/lng)
+  geocoding: ^3.0.0
+
+  # HTTP for Directions & Places APIs
+  http: ^1.2.0
+
+  # Local persistence
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Local notifications (arrival alert)
+  flutter_local_notifications: ^17.1.2
+
+  # Unique IDs
+  uuid: ^4.4.0
+
+  # Icons
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

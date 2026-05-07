@@ -1,0 +1,16 @@
+[
+  {
+    "session_start": "2026-04-30T10:24:50.979651",
+    "total_messages": 1,
+    "escalations": 0,
+    "avg_response_ms": 30303.6,
+    "max_response_ms": 30303.6
+  },
+  {
+    "session_start": "2026-04-30T10:26:23.354232",
+    "total_messages": 1,
+    "escalations": 0,
+    "avg_response_ms": 44487.5,
+    "max_response_ms": 44487.5
+  }
+]
