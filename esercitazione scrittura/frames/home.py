@@ -2,7 +2,7 @@
 # frames/home.py — Schermata iniziale (HomeFrame)
 # Mostra:
 #   • Titolo, sottotitolo
-#   • Barra controlli: toggle Modalità Daltonismo + pulsante README (?)
+#   • Barra controlli: toggle Modalità Daltonismo + pulsante README 
 #   • 4 card con le statistiche dell'utente
 #   • 3 box difficoltà per avviare un esercizio
 #   • Griglia legenda colori dita (si aggiorna con la modalità daltonismo)
@@ -73,7 +73,7 @@ class HomeFrame(ctk.CTkFrame):
 
         # ── Pulsante README ───────────────────────────────────────────────────
         ctk.CTkButton(
-            bar, text="? README",
+            bar, text="README",
             width=100, height=30,
             fg_color="transparent", border_width=1,
             font=ctk.CTkFont(size=12),
