@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dattilografia 10 Dita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">Dattilografia<em>10</em></a>
+      <a href="#download" class="btn-pill">Scarica gratis</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left content -->
+        <div>
+          <div class="badge hero-badge">
+            <div class="badge-dot"></div>
+            App gratuita per Windows
+          </div>
+          <h1 class="hero-h1">
+            Scrivi a 10 dita.<br>
+            <span class="dim">Senza guardare.</span>
+          </h1>
+          <p class="hero-p hero-desc">
+            Feedback carattere per carattere, tastiera visiva con guida dita,
+            statistiche in tempo reale. Ogni sessione ti rende più veloce.
+          </p>
+          <div class="cta-row hero-ctas">
+            <a href="#download" class="btn-lg">Scarica per Windows</a>
+            <a href="#come-funziona" class="btn-ghost">Come funziona</a>
+          </div>
+        </div>
+
+        <!-- Right: animated keyboard -->
+        <div class="hero-kb">
+          <div class="kb-wrap">
+            <div class="kb" id="kb-hero"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats bar ─────────────────────────────────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="reveal">
+          <div class="stat-num" data-target="3">0</div>
+          <div class="stat-lbl">livelli di difficoltà</div>
+        </div>
+        <div class="reveal d1">
+          <div class="stat-num" data-target="47" data-suffix="+">0</div>
+          <div class="stat-lbl">testi di esercitazione</div>
+        </div>
+        <div class="reveal d2">
+          <div class="stat-num" data-target="10">0</div>
+          <div class="stat-lbl">dita tracciate in real-time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Features ──────────────────────────────────────────────────────────────── -->
+  <section class="features" id="come-funziona">
+    <div class="container">
+
+      <div class="section-h reveal">
+        <h2 class="section-title">Come funziona</h2>
+        <p class="section-sub">Ogni elemento dell'interfaccia è progettato per correggere le cattive abitudini e costruire la memoria muscolare corretta.</p>
+      </div>
+
+      <!-- Feature 1: text feedback -->
+      <div class="feat-row reveal">
+        <div class="feat-text">
+          <h3 class="feat-title">Feedback immediato su ogni carattere</h3>
+          <p class="feat-desc">Verde per corretto, rosso per errore, blu per la posizione attuale. I caratteri in attesa mostrano il colore del dito che li deve premere — una mappa visiva del testo.</p>
+        </div>
+        <div class="feat-visual">
+          <div class="text-preview" id="text-preview"></div>
+        </div>
+      </div>
+
+      <!-- Feature 2: keyboard visual -->
+      <div class="feat-row flip reveal d1">
+        <div class="feat-text">
+          <h3 class="feat-title">Tastiera visiva con guida dito</h3>
+          <p class="feat-desc">Il tasto successivo si illumina del colore del dito responsabile. La label mostra il nome esatto del dito — costruisci la tecnica a 10 dita fin dal primo giorno.</p>
+        </div>
+        <div class="feat-visual">
+          <div class="kb-wrap">
+            <div class="kb" id="kb-feat"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 3: stats -->
+      <div class="feat-row reveal">
+        <div class="feat-text">
+          <h3 class="feat-title">Statistiche in tempo reale</h3>
+          <p class="feat-desc">WPM con formula standard (caratteri / 5 / minuti), precisione percentuale e timer live. A fine esercizio: badge record personale e messaggio motivazionale calibrato sulle prestazioni.</p>
+        </div>
+        <div class="feat-visual">
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="sc-val" style="color:#f39c12">34</div>
+              <div class="sc-lbl">WPM</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-val" style="color:#2ecc71">91%</div>
+              <div class="sc-lbl">Precisione</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-val" style="color:#89b4fa">1:23</div>
+              <div class="sc-lbl">Tempo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Colorblind callout ──────────────────────────────────────────────────── -->
+  <div class="a11y">
+    <div class="container">
+      <div class="a11y-card reveal">
+        <div>
+          <div class="a11y-tag">Accessibilità</div>
+          <h3 class="a11y-title">Modalità daltonismo inclusa</h3>
+          <p class="a11y-desc">Palette Okabe-Ito certificata per deuteranopia e protanopia. Toggle immediato dalla home — nessun menu nascosto, nessuna configurazione aggiuntiva.</p>
+        </div>
+        <div class="palette-swatches" id="palette-swatches"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Download CTA ──────────────────────────────────────────────────────────── -->
+  <section class="cta-section" id="download">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2 class="cta-h">Inizia oggi.</h2>
+        <p class="cta-sub">Nessuna registrazione. Nessun abbonamento. Richiede Python 3.10+ e CustomTkinter.</p>
+        <div class="code-block">python main.py</div>
+        <a href="https://github.com/alessiomdx1" class="btn-lg">Scarica da GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>Dattilografia10 — Progetto open source</span>
+        <span>Python &amp; CustomTkinter</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
