@@ -15,8 +15,8 @@ import random
 import customtkinter as ctk
 import tkinter as tk
 
-from config import TEXTS, KEYBOARD_ROWS, FINGER_NAMES, KEY_FINGER, get_finger_colors, get_text_colors
-from stats  import update_stats, save_stats
+from ..config import TEXTS, KEYBOARD_ROWS, FINGER_NAMES, KEY_FINGER, get_finger_colors, get_text_colors
+from ..stats  import update_stats, save_stats
 
 
 class PracticeFrame(ctk.CTkFrame):

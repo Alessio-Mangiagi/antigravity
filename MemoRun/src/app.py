@@ -8,9 +8,9 @@
 # =============================================================================
 
 import customtkinter as ctk
-from stats    import load_stats
-from settings import load_settings, save_settings
-from frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame, CustomTextFrame
+from .stats    import load_stats
+from .settings import load_settings, save_settings
+from .frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame, CustomTextFrame
 
 ctk.set_default_color_theme("blue")
 

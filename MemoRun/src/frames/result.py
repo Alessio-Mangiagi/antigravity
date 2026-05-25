@@ -9,7 +9,7 @@
 # =============================================================================
 
 import customtkinter as ctk
-from config import get_finger_colors
+from ..config import get_finger_colors
 
 
 class ResultFrame(ctk.CTkFrame):

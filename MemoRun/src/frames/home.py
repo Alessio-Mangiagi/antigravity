@@ -9,9 +9,9 @@
 # =============================================================================
 
 import customtkinter as ctk
-from config   import FINGER_NAMES, get_finger_colors
-from settings import save_settings
-from stats    import average_wpm
+from ..config   import FINGER_NAMES, get_finger_colors
+from ..settings import save_settings
+from ..stats    import average_wpm
 
 
 class HomeFrame(ctk.CTkFrame):
