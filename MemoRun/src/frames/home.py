@@ -80,7 +80,7 @@ class HomeFrame(ctk.CTkFrame):
         ).pack(side="right")
 
         # ── Selettore tema ────────────────────────────────────────────────────
-        ctk.CTkLabel(bar, text="Tema:", font=ctk.CTkFont(size=12)).pack(side="right", padx=(0, 4))
+        ctk.CTkLabel(bar, text="Leggi:", font=ctk.CTkFont(size=12)).pack(side="right", padx=(0, 4))
         theme_seg = ctk.CTkSegmentedButton(
             bar,
             values=["Chiaro", "Scuro", "Sistema"],
