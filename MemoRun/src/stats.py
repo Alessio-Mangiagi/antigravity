@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 # Percorso del file JSON nella cartella home dell'utente
-STATS_FILE = Path.home() / ".typing_tutor_stats.json"
+STATS_FILE = Path.home() / ".memorun_stats.json"
 
 # Struttura vuota usata al primo avvio (nessun dato salvato)
 _DEFAULT_STATS = {

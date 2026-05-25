@@ -81,7 +81,7 @@ class PracticeFrame(ctk.CTkFrame):
             hdr, text="<- Home", width=80,
             command=self.app.show_home,
         ).pack(side="left")
-        ctk.CTkLabel(hdr, text=f"Difficolta: {self.difficulty}", font=ctk.CTkFont(size=13)).pack(side="left", padx=18)
+        ctk.CTkLabel(hdr, text=f"Difficoltà: {self.difficulty}", font=ctk.CTkFont(size=13)).pack(side="left", padx=18)
         ctk.CTkButton(
             hdr, text="? README", width=90, height=28,
             font=ctk.CTkFont(size=11),
@@ -147,6 +147,7 @@ class PracticeFrame(ctk.CTkFrame):
         self.entry.bind("<KeyRelease>", self._on_key)
         self.entry.bind("<BackSpace>", lambda e: "break")
         self.entry.bind("<Delete>",    lambda e: "break")
+        self.entry.bind("<Escape>",    lambda e: self.app.show_home())
         self.entry.focus()
 
     def _build_progress_bar(self):

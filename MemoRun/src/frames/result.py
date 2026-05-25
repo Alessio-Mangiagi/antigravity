@@ -58,7 +58,7 @@ class ResultFrame(ctk.CTkFrame):
         container.pack(pady=10)
 
         cards = [
-            ("Velocita",   str(self.wpm),      "WPM", wpm_color),
+            ("Velocità",   str(self.wpm),      "WPM", wpm_color),
             ("Precisione", str(self.accuracy),  "%",   acc_color),
         ]
         for col, (lbl, val, unit, color) in enumerate(cards):
@@ -70,7 +70,7 @@ class ResultFrame(ctk.CTkFrame):
 
     def _build_record_badge(self):
         """Badge giallo visibile solo se il WPM attuale è il nuovo record personale."""
-        if self.wpm >= self.app.stats["best_wpm"]:
+        if self.app.stats["sessions"] > 1 and self.wpm >= self.app.stats["best_wpm"]:
             ctk.CTkLabel(
                 self, text="Nuovo record personale!",
                 font=ctk.CTkFont(size=17, weight="bold"),
@@ -99,7 +99,7 @@ class ResultFrame(ctk.CTkFrame):
             width=160, height=44, font=ctk.CTkFont(size=14),
         ).pack(side="left", padx=10)
         ctk.CTkButton(
-            bf, text="Cambia difficolta",
+            bf, text="Cambia difficoltà",
             command=self.app.show_home,
             width=160, height=44, font=ctk.CTkFont(size=14),
             fg_color=("gray70", "gray30"),

@@ -69,7 +69,7 @@ class TypingApp(ctk.CTk):
         self.current_frame = frame
         self.current_frame.pack(fill="both", expand=True)
 
-    _BG = {"Light": "#cce8f4", "Dark": "#000000"}
+    _BG = {"Light": "#cce8f4", "Dark": "#09090b"}
 
     def apply_theme(self, mode: str):
         self.settings["theme"] = mode

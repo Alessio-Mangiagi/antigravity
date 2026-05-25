@@ -11,7 +11,7 @@
 import customtkinter as ctk
 from ..config   import FINGER_NAMES, get_finger_colors
 from ..settings import save_settings
-from ..stats    import average_wpm
+from ..stats    import average_wpm, save_stats, _DEFAULT_STATS
 
 
 class HomeFrame(ctk.CTkFrame):
@@ -52,7 +52,7 @@ class HomeFrame(ctk.CTkFrame):
         # ── Toggle modalità daltonismo ────────────────────────────────────────
         switch = ctk.CTkSwitch(
             bar,
-            text="Modalita Daltonismo",
+            text="Modalità Daltonismo",
             font=ctk.CTkFont(size=12),
             command=self._toggle_colorblind,
         )
@@ -114,10 +114,19 @@ class HomeFrame(ctk.CTkFrame):
             ctk.CTkLabel(card, text=val, font=ctk.CTkFont(size=26, weight="bold")).pack(pady=(14, 2))
             ctk.CTkLabel(card, text=lbl, font=ctk.CTkFont(size=11), text_color="gray").pack(pady=(0, 14))
 
+        ctk.CTkButton(
+            self, text="Azzera statistiche",
+            width=160, height=26,
+            font=ctk.CTkFont(size=11),
+            fg_color=("gray70", "gray30"),
+            hover_color=("#e74c3c", "#c0392b"),
+            command=self._reset_stats,
+        ).pack(pady=(0, 4))
+
     def _build_difficulty_buttons(self):
         """Tre box cliccabili per selezionare Facile / Medio / Difficile."""
         ctk.CTkLabel(
-            self, text="Seleziona difficolta:",
+            self, text="Seleziona difficoltà:",
             font=ctk.CTkFont(size=15, weight="bold"),
         ).pack(pady=(14, 8))
 
@@ -174,6 +183,16 @@ class HomeFrame(ctk.CTkFrame):
     def _on_theme_change(self, label: str):
         _map = {"Chiaro": "Light", "Scuro": "Dark", "Sistema": "System"}
         self.app.apply_theme(_map[label])
+
+    def _reset_stats(self):
+        dialog = ctk.CTkInputDialog(
+            text="Scrivi RESET per azzerare tutte le statistiche:",
+            title="Azzera statistiche",
+        )
+        if dialog.get_input() == "RESET":
+            self.app.stats.update(_DEFAULT_STATS)
+            save_stats(self.app.stats)
+            self.app.show_home()
 
     def _toggle_colorblind(self):
         """Inverte la modalità daltonismo, salva la preferenza e ricarica la Home."""

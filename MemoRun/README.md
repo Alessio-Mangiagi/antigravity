@@ -8,6 +8,7 @@ Costruita con Python + CustomTkinter.
 ## Avvio rapido
 
 ```bash
+pip install -r requirements.txt
 python main.py
 ```
 
@@ -61,7 +62,7 @@ Il tasto successivo da premere viene **evidenziato** sulla tastiera visiva.
 
 ## Statistiche
 
-Salvate automaticamente in `~/.typing_tutor_stats.json` dopo ogni esercizio completato.
+Salvate automaticamente in `~/.memorun_stats.json` dopo ogni esercizio completato.
 
 | Campo          | Descrizione                                      |
 |----------------|--------------------------------------------------|
