@@ -42,13 +42,13 @@ class TypingApp(ctk.CTk):
         """Mostra la schermata iniziale con statistiche e selezione difficoltà."""
         self._switch(HomeFrame(self))
 
-    def show_practice(self, difficulty: str):
+    def show_practice(self, difficulty: str, text: str = ""):
         """Avvia un esercizio con la difficoltà specificata ('Facile'/'Medio'/'Difficile')."""
-        self._switch(PracticeFrame(self, difficulty))
+        self._switch(PracticeFrame(self, difficulty, custom_text=text))
 
-    def show_result(self, wpm: int, accuracy: int, difficulty: str):
+    def show_result(self, wpm: int, accuracy: int, difficulty: str, current_text: str = ""):
         """Mostra i risultati dopo il completamento di un esercizio."""
-        self._switch(ResultFrame(self, wpm, accuracy, difficulty))
+        self._switch(ResultFrame(self, wpm, accuracy, difficulty, current_text))
 
     def show_custom_text(self):
         """Mostra la schermata per inserire un testo personalizzato."""

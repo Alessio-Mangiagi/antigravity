@@ -8,29 +8,26 @@
 #   • Reminder visivo sulla home row (tasti A S D F  J K L colorati per dito)
 # =============================================================================
 
+import random
 import customtkinter as ctk
-from ..config import get_finger_colors
+from ..config import get_finger_colors, TEXTS
 
 
 class ResultFrame(ctk.CTkFrame):
     """Schermata mostrata al completamento di un esercizio."""
 
-    # Soglie WPM per colorazione risultato
-    _WPM_POOR   = 20    # sotto → rosso
-    _WPM_MEDIUM = 40    # sotto → arancione
-    # sopra → verde
+    _WPM_POOR   = 20
+    _WPM_MEDIUM = 40
+    _ACC_POOR   = 80
+    _ACC_MEDIUM = 95
 
-    # Soglie precisione per colorazione risultato
-    _ACC_POOR   = 80    # sotto → rosso
-    _ACC_MEDIUM = 95    # sotto → arancione
-    # sopra → verde
-
-    def __init__(self, master, wpm: int, accuracy: int, difficulty: str):
+    def __init__(self, master, wpm: int, accuracy: int, difficulty: str, current_text: str = ""):
         super().__init__(master, fg_color="transparent")
-        self.app        = master
-        self.wpm        = wpm
-        self.accuracy   = accuracy
-        self.difficulty    = difficulty
+        self.app          = master
+        self.wpm          = wpm
+        self.accuracy     = accuracy
+        self.difficulty   = difficulty
+        self.current_text = current_text
         self.finger_colors = get_finger_colors(self.app.colorblind)
         self._build()
 
@@ -89,19 +86,33 @@ class ResultFrame(ctk.CTkFrame):
         ).pack(pady=16)
 
     def _build_action_buttons(self):
-        """Pulsanti: Riprova (stessa difficoltà) e Cambia difficoltà (torna a Home)."""
         bf = ctk.CTkFrame(self, fg_color="transparent")
         bf.pack(pady=26)
         ctk.CTkButton(
             bf, text="Riprova",
-            command=lambda: self.app.show_practice(self.difficulty),
+            command=lambda: self.app.show_practice(self.difficulty, self.current_text),
+            width=160, height=44, font=ctk.CTkFont(size=14),
+        ).pack(side="left", padx=10)
+        ctk.CTkButton(
+            bf, text="Cambia frase",
+            command=self._new_random_text,
             width=160, height=44, font=ctk.CTkFont(size=14),
         ).pack(side="left", padx=10)
         ctk.CTkButton(
             bf, text="Cambia difficolta",
             command=self.app.show_home,
             width=160, height=44, font=ctk.CTkFont(size=14),
+            fg_color=("gray70", "gray30"),
         ).pack(side="left", padx=10)
+
+    def _new_random_text(self):
+        if self.difficulty == "Personalizzato":
+            self.app.show_custom_text()
+            return
+        pool = TEXTS.get(self.difficulty, [])
+        candidates = [t for t in pool if t != self.current_text]
+        new_text = random.choice(candidates) if candidates else random.choice(pool)
+        self.app.show_practice(self.difficulty, new_text)
 
     def _build_home_row_reminder(self):
         """Reminder visivo dei 7 tasti della home row colorati per dito,

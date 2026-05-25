@@ -229,7 +229,7 @@ class PracticeFrame(ctk.CTkFrame):
             ("indice_dx",  "Y H N  U J M"),
             ("medio_dx",   "I  K"),
             ("anulare_dx", "O  L"),
-            ("mignolo_dx", "P"),
+            ("mignolo_dx", "P  è  ò  à  ù"),
         ]
         for i, (finger, keys) in enumerate(finger_keys):
             color = self.finger_colors[finger]
@@ -409,4 +409,4 @@ class PracticeFrame(ctk.CTkFrame):
         update_stats(self.app.stats, wpm, len(self.text))
         save_stats(self.app.stats)
 
-        self.after(300, lambda: self.app.show_result(wpm, acc, self.difficulty))
+        self.after(300, lambda: self.app.show_result(wpm, acc, self.difficulty, self.text))
