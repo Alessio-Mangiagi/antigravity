@@ -109,7 +109,7 @@ nav {
   transition: background .18s, transform .1s;
 }
 .btn-pill:hover { background: var(--accent-l); }
-.btn-pill:active { transform: scale(.96) translateY(-1px); }
+.btn-pill:active { transform: scale(.96) translateY(1px); }
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 
@@ -156,7 +156,7 @@ h1 {
   margin-bottom: 20px;
   color: var(--text);
 }
-h1 .dim { color: var(--muted); }
+h1 .dim { color: var(--sub); }
 
 .hero-p {
   font-size: 17px; color: var(--sub);
@@ -177,7 +177,7 @@ h1 .dim { color: var(--muted); }
   transition: background .18s, transform .1s;
 }
 .btn-lg:hover { background: var(--accent-l); }
-.btn-lg:active { transform: scale(.97) translateY(-1px); }
+.btn-lg:active { transform: scale(.97) translateY(1px); }
 
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 8px;
@@ -259,6 +259,7 @@ h1 .dim { color: var(--muted); }
   line-height: 1;
   margin-bottom: 8px;
   font-variant-numeric: tabular-nums;
+  color: var(--accent);
 }
 
 .stat-lbl { font-size: 13px; color: var(--muted); }
@@ -430,4 +431,61 @@ footer {
 
 @media (max-width: 500px) {
   .footer-inner { flex-direction: column; gap: 6px; text-align: center; }
+}
+
+/* ── Skip link ──────────────────────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 200;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #09090b;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top .15s;
+}
+.skip-link:focus { top: 0; }
+
+/* ── Focus visible ──────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Hero ambient glow ──────────────────────────────────────────────────── */
+
+.hero {
+  background: radial-gradient(ellipse at 20% 55%, rgba(16,185,129,.07) 0%, transparent 58%);
+}
+
+/* ── CTA section subtle tint ────────────────────────────────────────────── */
+
+.cta-section {
+  background: linear-gradient(to bottom, var(--bg), rgba(16,185,129,.03) 50%, var(--bg));
+}
+
+/* ── Stat card value classes ────────────────────────────────────────────── */
+
+.sc-wpm  { color: #e8a44a; }
+.sc-acc  { color: var(--accent-l); }
+.sc-time { color: #89b4fa; }
+
+/* ── Noise overlay ──────────────────────────────────────────────────────── */
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
 }
