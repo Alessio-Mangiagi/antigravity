@@ -9,11 +9,9 @@
 
 import customtkinter as ctk
 from stats    import load_stats
-from settings import load_settings
-from frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame
+from settings import load_settings, save_settings
+from frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame, CustomTextFrame
 
-# Tema globale dell'applicazione (dark + accent blue)
-ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 
@@ -22,14 +20,16 @@ class TypingApp(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.title("Dattilografia 10 Dita")
+        self.title("Memorun")
         self.geometry("1050x780")
-        self.resizable(False, False)
+        self.minsize(900, 700)
+        self.resizable(True, True)
 
-        # Statistiche caricate dal file JSON e condivise con tutte le schermate
         self.stats    = load_stats()
-        # Preferenze utente (daltonismo, ecc.) separate dalle statistiche
         self.settings = load_settings()
+
+        ctk.set_appearance_mode(self.settings.get("theme", "System"))
+        self._update_bg()
 
         # Riferimento alla schermata attualmente visualizzata
         self.current_frame: ctk.CTkFrame | None = None
@@ -50,6 +50,14 @@ class TypingApp(ctk.CTk):
         """Mostra i risultati dopo il completamento di un esercizio."""
         self._switch(ResultFrame(self, wpm, accuracy, difficulty))
 
+    def show_custom_text(self):
+        """Mostra la schermata per inserire un testo personalizzato."""
+        self._switch(CustomTextFrame(self))
+
+    def show_practice_custom(self, text: str, word_by_word: bool = False):
+        """Avvia un esercizio con testo personalizzato."""
+        self._switch(PracticeFrame(self, "Personalizzato", custom_text=text, word_by_word=word_by_word))
+
     def show_readme(self):
         """Apre il visualizzatore README in-app."""
         self._switch(ReadmeFrame(self))
@@ -61,7 +69,25 @@ class TypingApp(ctk.CTk):
         self.current_frame = frame
         self.current_frame.pack(fill="both", expand=True)
 
+    _BG = {"Light": "#cce8f4", "Dark": "#000000"}
+
+    def apply_theme(self, mode: str):
+        self.settings["theme"] = mode
+        save_settings(self.settings)
+        ctk.set_appearance_mode(mode)
+        self._update_bg()
+        self.show_home()
+
+    def _update_bg(self):
+        resolved = ctk.get_appearance_mode()   # "Light" o "Dark" (risolve System)
+        color = self._BG.get(resolved)
+        if color:
+            self.configure(fg_color=color)
+
     @property
     def colorblind(self) -> bool:
-        """Scorciatoia per leggere la modalità daltonismo dalle impostazioni."""
         return self.settings.get("colorblind_mode", False)
+
+    @property
+    def theme(self) -> str:
+        return self.settings.get("theme", "System")

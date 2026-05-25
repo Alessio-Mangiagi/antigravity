@@ -36,7 +36,7 @@ class HomeFrame(ctk.CTkFrame):
     def _build_title(self):
         """Titolo e sottotitolo centrati in cima."""
         ctk.CTkLabel(
-            self, text="Dattilografia 10 Dita",
+            self, text="Memorun",
             font=ctk.CTkFont(size=34, weight="bold"),
         ).pack(pady=(30, 4))
         ctk.CTkLabel(
@@ -75,10 +75,23 @@ class HomeFrame(ctk.CTkFrame):
         ctk.CTkButton(
             bar, text="README",
             width=100, height=30,
-            fg_color="transparent", border_width=1,
             font=ctk.CTkFont(size=12),
             command=self.app.show_readme,
         ).pack(side="right")
+
+        # ── Selettore tema ────────────────────────────────────────────────────
+        ctk.CTkLabel(bar, text="Tema:", font=ctk.CTkFont(size=12)).pack(side="right", padx=(0, 4))
+        theme_seg = ctk.CTkSegmentedButton(
+            bar,
+            values=["Chiaro", "Scuro", "Sistema"],
+            command=self._on_theme_change,
+            font=ctk.CTkFont(size=12),
+            height=30,
+        )
+        theme_seg.pack(side="right", padx=(0, 12))
+        # Imposta il valore corrente salvato
+        _map = {"Light": "Chiaro", "Dark": "Scuro", "System": "Sistema"}
+        theme_seg.set(_map.get(self.app.theme, "Sistema"))
 
     def _build_stats_cards(self):
         """4 card affiancate con le statistiche cumulative dell'utente."""
@@ -112,18 +125,19 @@ class HomeFrame(ctk.CTkFrame):
         container.pack()
 
         difficulties = [
-            ("Facile",    "#27ae60", "Parole semplici  ·  5-8 parole"),
-            ("Medio",     "#f39c12", "Frasi complete  ·  8-14 parole"),
-            ("Difficile", "#e74c3c", "Testi lunghi  ·  20+ parole"),
+            ("Facile",    "#27ae60", "Parole semplici  ·  5-8 parole",   lambda: self.app.show_practice("Facile")),
+            ("Medio",     "#f39c12", "Frasi complete  ·  8-14 parole",   lambda: self.app.show_practice("Medio")),
+            ("Difficile", "#e74c3c", "Testi lunghi  ·  20+ parole",      lambda: self.app.show_practice("Difficile")),
+            ("Personalizzato", "#8e44ad", "Il tuo testo  ·  lunghezza libera", self.app.show_custom_text),
         ]
-        for diff, color, desc in difficulties:
+        for diff, color, desc, cmd in difficulties:
             box = ctk.CTkFrame(container, fg_color=("gray90", "gray15"))
             box.pack(side="left", padx=12, pady=6)
             ctk.CTkLabel(box, text=diff, font=ctk.CTkFont(size=17, weight="bold"), text_color=color).pack(pady=(18, 3), padx=28)
             ctk.CTkLabel(box, text=desc, font=ctk.CTkFont(size=11), text_color="gray").pack(pady=(0, 12), padx=28)
             ctk.CTkButton(
-                box, text="Inizia", fg_color=color, hover_color=color,
-                command=lambda d=diff: self.app.show_practice(d),
+                box, text="Inizia",
+                command=cmd,
             ).pack(pady=(0, 18), padx=28)
 
     def _build_finger_guide(self):
@@ -156,6 +170,10 @@ class HomeFrame(ctk.CTkFrame):
             ctk.CTkLabel(box, text=keys, font=ctk.CTkFont(size=10), text_color="white").pack(padx=10, pady=(0, 7))
 
     # ─── Azioni ───────────────────────────────────────────────────────────────
+
+    def _on_theme_change(self, label: str):
+        _map = {"Chiaro": "Light", "Scuro": "Dark", "Sistema": "System"}
+        self.app.apply_theme(_map[label])
 
     def _toggle_colorblind(self):
         """Inverte la modalità daltonismo, salva la preferenza e ricarica la Home."""

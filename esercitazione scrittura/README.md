@@ -1,4 +1,4 @@
-# Dattilografia 10 Dita
+# Memorun
 
 App per imparare la tecnica delle **10 dita** sulla tastiera QWERTY italiana.  
 Costruita con Python + CustomTkinter.
@@ -108,9 +108,14 @@ L'impostazione viene **salvata automaticamente** e ricordata alle sessioni succe
 ├── settings.py        # Preferenze utente (daltonismo, ecc.)
 ├── stats.py           # Caricamento/salvataggio statistiche
 ├── README.md          # Questo file
-└── frames/
-    ├── home.py        # Schermata iniziale
-    ├── practice.py    # Esercizio di digitazione
-    ├── result.py      # Risultati post-esercizio
-    └── readme_view.py # Visualizzatore README in-app
+├── frames/
+│   ├── home.py        # Schermata iniziale
+│   ├── practice.py    # Esercizio di digitazione
+│   ├── result.py      # Risultati post-esercizio
+│   ├── custom_text.py # Inserimento testo personalizzato
+│   └── readme_view.py # Visualizzatore README in-app
+└── sito/
+    ├── landing.html   # Landing page
+    ├── style.css      # Stili
+    └── main.js        # Animazioni e interazioni
 ```

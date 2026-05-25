@@ -22,29 +22,36 @@ from stats  import update_stats, save_stats
 class PracticeFrame(ctk.CTkFrame):
     """Schermata principale dell'esercizio di dattilografia."""
 
-    def __init__(self, master, difficulty: str):
+    def __init__(self, master, difficulty: str, custom_text: str = "", word_by_word: bool = False):
         super().__init__(master, fg_color="transparent")
-        self.app        = master
-        self.difficulty = difficulty
-        self.text       = random.choice(TEXTS[difficulty])  # testo dell'esercizio corrente
-        self.typed      = ""           # stringa digitata finora dall'utente
-        self.start_time = None         # timestamp del primo tasto premuto
-        self.timer_running = False     # controlla il loop del timer
-        self.finished   = False        # blocca input dopo completamento
+        self.app          = master
+        self.difficulty   = difficulty
+        self.text         = custom_text if custom_text else random.choice(TEXTS[difficulty])
+        self.typed        = ""
+        self.start_time   = None
+        self.timer_running = False
+        self.finished     = False
 
-        # Palette colori attiva (normale o daltonismo) — letta una volta sola al costruttore
+        self.word_by_word = word_by_word
+        if word_by_word:
+            self.words      = self.text.split()
+            self.word_index = 0
+            self.all_typed  = ""   # accumula tutto il testo digitato (parole completate)
+
         self.finger_colors = get_finger_colors(self.app.colorblind)
         self.text_colors   = get_text_colors(self.app.colorblind)
 
         self._build()
-        self._refresh_text()           # mostra il testo da digitare all'avvio
-        self._highlight_next_key()     # evidenzia subito il primo tasto
+        self._refresh_text()
+        self._highlight_next_key()
 
     # ─── Costruzione interfaccia ──────────────────────────────────────────────
 
     def _build(self):
         self._build_header()
         self._build_stats_bar()
+        if self.word_by_word:
+            self._build_word_counter()
         self._build_text_display()
         self._build_entry()
         self._build_progress_bar()
@@ -55,20 +62,28 @@ class PracticeFrame(ctk.CTkFrame):
         self._build_hint_label()
         self._build_restart_button()
 
+    def _build_word_counter(self):
+        self.word_counter_var = ctk.StringVar(value=f"Parola 1 / {len(self.words)}")
+        ctk.CTkLabel(
+            self, textvariable=self.word_counter_var,
+            font=ctk.CTkFont(size=13), text_color="gray",
+        ).pack(pady=(2, 0))
+
+    def _update_word_counter(self):
+        idx = min(self.word_index + 1, len(self.words))
+        self.word_counter_var.set(f"Parola {idx} / {len(self.words)}")
+
     def _build_header(self):
         """Riga in cima: pulsante Home + etichetta difficoltà."""
         hdr = ctk.CTkFrame(self, fg_color="transparent")
         hdr.pack(fill="x", padx=28, pady=(18, 0))
         ctk.CTkButton(
             hdr, text="<- Home", width=80,
-            fg_color="transparent", border_width=1,
             command=self.app.show_home,
         ).pack(side="left")
         ctk.CTkLabel(hdr, text=f"Difficolta: {self.difficulty}", font=ctk.CTkFont(size=13)).pack(side="left", padx=18)
-        # Pulsante README accessibile anche durante l'esercizio
         ctk.CTkButton(
             hdr, text="? README", width=90, height=28,
-            fg_color="transparent", border_width=1,
             font=ctk.CTkFont(size=11),
             command=self.app.show_readme,
         ).pack(side="right")
@@ -130,6 +145,8 @@ class PracticeFrame(ctk.CTkFrame):
         )
         self.entry.pack(fill="x", padx=28, pady=4)
         self.entry.bind("<KeyRelease>", self._on_key)
+        self.entry.bind("<BackSpace>", lambda e: "break")
+        self.entry.bind("<Delete>",    lambda e: "break")
         self.entry.focus()
 
     def _build_progress_bar(self):
@@ -139,14 +156,19 @@ class PracticeFrame(ctk.CTkFrame):
         self.progress.set(0)
 
     def _build_keyboard(self, parent):
-        """Tastiera QWERTY visiva 3 righe + barra spazio.
-        Ogni tasto mostra il colore del dito assegnato come colore del testo.
-        Il tasto successivo da premere viene evidenziato con lo sfondo colorato."""
-        kb = ctk.CTkFrame(parent, fg_color="transparent")
-        kb.pack(side="left", pady=4, padx=(0, 20))
+        """Tastiera QWERTY visiva 3 righe + barra spazio dentro card arrotondata."""
+        # Card contenitore con sfondo scuro e bordi arrotondati
+        card = ctk.CTkFrame(
+            parent,
+            fg_color=("#c8c8c8", "#1e1e2e"),
+            corner_radius=16,
+        )
+        card.pack(side="left", pady=4, padx=(0, 20))
+
+        kb = ctk.CTkFrame(card, fg_color="transparent")
+        kb.pack(padx=14, pady=14)
         self.key_btns: dict[str, ctk.CTkButton] = {}
 
-        # Offset orizzontale delle righe per simulare il layout reale della tastiera
         offsets = [0, 14, 28]
         for r, row in enumerate(KEYBOARD_ROWS):
             row_frame = ctk.CTkFrame(kb, fg_color="transparent")
@@ -157,28 +179,28 @@ class PracticeFrame(ctk.CTkFrame):
                 color = self.finger_colors[KEY_FINGER.get(key, "indice_dx")]
                 btn = ctk.CTkButton(
                     row_frame, text=key.upper(),
-                    width=40, height=40,
-                    font=ctk.CTkFont(size=12, weight="bold"),
-                    fg_color=("gray72", "gray28"),   # sfondo neutro di default
-                    hover=False, corner_radius=5,
-                    text_color=color,                # lettera colorata per dito
+                    width=42, height=42,
+                    font=ctk.CTkFont(size=13, weight="bold"),
+                    fg_color=("#b0b0b0", "#2a2a3e"),
+                    hover=False, corner_radius=8,
+                    text_color=color,
                 )
-                btn.pack(side="left", padx=2, pady=2)
+                btn.pack(side="left", padx=3, pady=3)
                 self.key_btns[key] = btn
 
-        # Barra spazio (più larga, assegnata ai pollici)
+        # Barra spazio
         sf = ctk.CTkFrame(kb, fg_color="transparent")
         sf.pack()
         ctk.CTkFrame(sf, width=60, fg_color="transparent").pack(side="left")
         sp = ctk.CTkButton(
             sf, text="SPAZIO",
-            width=270, height=40,
-            font=ctk.CTkFont(size=11, weight="bold"),
-            fg_color=("gray72", "gray28"),
-            hover=False, corner_radius=5,
+            width=290, height=42,
+            font=ctk.CTkFont(size=12, weight="bold"),
+            fg_color=("#b0b0b0", "#2a2a3e"),
+            hover=False, corner_radius=8,
             text_color=self.finger_colors["pollice"],
         )
-        sp.pack(side="left", padx=2, pady=2)
+        sp.pack(side="left", padx=3, pady=3)
         self.key_btns[" "] = sp
 
     def _build_hint_label(self):
@@ -220,10 +242,13 @@ class PracticeFrame(ctk.CTkFrame):
 
     def _build_restart_button(self):
         """Pulsante per caricare un nuovo testo della stessa difficoltà."""
+        if self.difficulty == "Personalizzato":
+            cmd = self.app.show_custom_text
+        else:
+            cmd = lambda: self.app.show_practice(self.difficulty)
         ctk.CTkButton(
             self, text="Nuovo testo",
-            command=lambda: self.app.show_practice(self.difficulty),
-            width=130, fg_color="transparent", border_width=1,
+            command=cmd, width=130,
         ).pack(pady=6)
 
     # ─── Logica di gioco ──────────────────────────────────────────────────────
@@ -235,23 +260,63 @@ class PracticeFrame(ctk.CTkFrame):
 
         typed = self.entry_var.get()
 
-        # Avvia il timer al primo carattere digitato
         if not self.start_time and typed:
             self.start_time = time.time()
             self.timer_running = True
             self._tick()
+
+        if self.word_by_word:
+            current_word = self.words[self.word_index]
+            is_last = self.word_index == len(self.words) - 1
+
+            if typed.endswith(" "):
+                # Avanza alla parola successiva quando si preme spazio
+                self.all_typed += typed[:-1] + " "
+                if is_last:
+                    self._finish()
+                    return
+                self.word_index += 1
+                self.entry_var.set("")
+                self._update_word_counter()
+            elif is_last and len(typed) >= len(current_word):
+                # Ultima parola completata senza spazio
+                self.all_typed += typed
+                self._finish()
+                return
+
+            self._refresh_text()
+            self._update_stats()
+            self._highlight_next_key()
+            return
 
         self.typed = typed
         self._refresh_text()
         self._update_stats()
         self._highlight_next_key()
 
-        # L'esercizio è completato quando si raggiunge la lunghezza del testo
         if len(typed) >= len(self.text):
             self._finish()
 
     def _refresh_text(self):
         """Ridisegna il widget tk.Text applicando i tag colore a ogni carattere."""
+        if self.word_by_word:
+            word  = self.words[self.word_index] if self.word_index < len(self.words) else ""
+            typed = self.entry_var.get().rstrip(" ")
+            self.txt.config(state="normal")
+            self.txt.delete("1.0", "end")
+            for i, ch in enumerate(word):
+                if i < len(typed):
+                    tag = "correct" if typed[i] == ch else "wrong"
+                elif i == len(typed):
+                    tag = "cursor"
+                else:
+                    finger = KEY_FINGER.get(ch.lower(), "indice_dx")
+                    tag = f"finger_{finger}"
+                self.txt.insert("end", ch, tag)
+            self.txt.config(state="disabled")
+            self.progress.set(self.word_index / len(self.words) if self.words else 0)
+            return
+
         typed = self.typed
         text  = self.text
         self.txt.config(state="normal")
@@ -260,7 +325,7 @@ class PracticeFrame(ctk.CTkFrame):
             if i < len(typed):
                 tag = "correct" if typed[i] == ch else "wrong"
             elif i == len(typed):
-                tag = "cursor"    # posizione corrente del cursore
+                tag = "cursor"
             else:
                 finger = KEY_FINGER.get(ch.lower(), "indice_dx")
                 tag = f"finger_{finger}"
@@ -271,6 +336,16 @@ class PracticeFrame(ctk.CTkFrame):
     def _update_stats(self):
         """Aggiorna WPM e precisione nella barra statistiche in tempo reale.
         WPM usa la formula standard: (caratteri / 5) / minuti."""
+        if self.word_by_word:
+            total = self.all_typed + self.entry_var.get()
+            if self.start_time and total:
+                elapsed = max(time.time() - self.start_time, 0.1)
+                self.wpm_var.set(str(int((len(total) / 5) / elapsed * 60)))
+            if total:
+                correct = sum(a == b for a, b in zip(total, self.text))
+                self.acc_var.set(str(int(correct / len(total) * 100)))
+            return
+
         typed = self.typed
         text  = self.text
         if self.start_time and typed:
@@ -284,15 +359,19 @@ class PracticeFrame(ctk.CTkFrame):
     def _highlight_next_key(self):
         """Evidenzia sulla tastiera visiva il prossimo tasto da premere.
         Tutti gli altri tasti tornano allo sfondo neutro."""
-        # Reset sfondo di tutti i tasti
         for key, btn in self.key_btns.items():
             color = self.finger_colors[KEY_FINGER.get(key, "indice_dx")]
             btn.configure(fg_color=("gray72", "gray28"), text_color=color)
 
-        # Evidenzia il tasto successivo con sfondo pieno del colore del dito
-        pos = len(self.typed)
-        if pos < len(self.text):
-            next_key = self.text[pos].lower()
+        if self.word_by_word:
+            word = self.words[self.word_index] if self.word_index < len(self.words) else ""
+            pos  = len(self.entry_var.get().rstrip(" "))
+        else:
+            word = self.text
+            pos  = len(self.typed)
+
+        if pos < len(word):
+            next_key = word[pos].lower()
             if next_key in self.key_btns:
                 finger = KEY_FINGER.get(next_key, "indice_dx")
                 color  = self.finger_colors[finger]
@@ -318,12 +397,16 @@ class PracticeFrame(ctk.CTkFrame):
 
         elapsed = max(time.time() - self.start_time, 0.1)
         wpm     = int((len(self.text) / 5) / elapsed * 60)
-        correct = sum(a == b for a, b in zip(self.typed, self.text))
-        acc     = int(correct / len(self.text) * 100)
 
-        # Salva le statistiche aggiornate su disco
+        if self.word_by_word:
+            full_typed = self.all_typed
+            correct = sum(a == b for a, b in zip(full_typed, self.text))
+            acc = int(correct / max(len(full_typed), 1) * 100)
+        else:
+            correct = sum(a == b for a, b in zip(self.typed, self.text))
+            acc = int(correct / len(self.text) * 100)
+
         update_stats(self.app.stats, wpm, len(self.text))
         save_stats(self.app.stats)
 
-        # Piccolo ritardo prima di navigare per dare feedback visivo
         self.after(300, lambda: self.app.show_result(wpm, acc, self.difficulty))

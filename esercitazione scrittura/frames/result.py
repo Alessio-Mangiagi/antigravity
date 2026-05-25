@@ -101,7 +101,6 @@ class ResultFrame(ctk.CTkFrame):
             bf, text="Cambia difficolta",
             command=self.app.show_home,
             width=160, height=44, font=ctk.CTkFont(size=14),
-            fg_color="transparent", border_width=1,
         ).pack(side="left", padx=10)
 
     def _build_home_row_reminder(self):
@@ -133,7 +132,6 @@ class ResultFrame(ctk.CTkFrame):
         ctk.CTkButton(
             self, text="? README",
             width=110, height=28,
-            fg_color="transparent", border_width=1,
             font=ctk.CTkFont(size=11),
             command=self.app.show_readme,
         ).pack(pady=(4, 0))

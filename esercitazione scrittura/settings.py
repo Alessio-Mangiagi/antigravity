@@ -12,6 +12,7 @@ SETTINGS_FILE = Path.home() / ".typing_tutor_settings.json"
 
 _DEFAULTS = {
     "colorblind_mode": False,
+    "theme": "System",
 }
 
 
