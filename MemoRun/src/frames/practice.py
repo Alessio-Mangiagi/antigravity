@@ -169,8 +169,10 @@ class PracticeFrame(ctk.CTkFrame):
         kb.pack(padx=14, pady=14)
         self.key_btns: dict[str, ctk.CTkButton] = {}
 
-        offsets = [0, 14, 28]
+        offsets = [0, 14, 28, 120]  # 120 = centra 5 tasti accentati sotto 10 tasti
         for r, row in enumerate(KEYBOARD_ROWS):
+            if r == 3:
+                ctk.CTkFrame(kb, height=4, fg_color="transparent").pack()
             row_frame = ctk.CTkFrame(kb, fg_color="transparent")
             row_frame.pack()
             if offsets[r]:
@@ -229,7 +231,7 @@ class PracticeFrame(ctk.CTkFrame):
             ("indice_dx",  "Y H N  U J M"),
             ("medio_dx",   "I  K"),
             ("anulare_dx", "O  L"),
-            ("mignolo_dx", "P  è  ò  à  ù"),
+            ("mignolo_dx", "P  à è ì ò ù"),
         ]
         for i, (finger, keys) in enumerate(finger_keys):
             color = self.finger_colors[finger]

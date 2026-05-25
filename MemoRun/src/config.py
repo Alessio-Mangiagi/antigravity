@@ -322,9 +322,10 @@ TEXTS = {
 }
 # ─── Layout fisico tastiera QWERTY (righe dall'alto verso il basso) ───────────
 KEYBOARD_ROWS = [
-    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "è"],   # riga superiore
-    ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ò", "à", "ù"],  # home row
-    ["z", "x", "c", "v", "b", "n", "m"],                          # riga inferiore
+    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],   # riga superiore
+    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],         # home row
+    ["z", "x", "c", "v", "b", "n", "m"],                   # riga inferiore
+    ["à", "è", "ì", "ò", "ù"],                             # tasti accentati italiani
 ]
 
 # ─── Colore assegnato a ogni dito — palette normale ───────────────────────────
@@ -421,7 +422,8 @@ KEY_FINGER = {
     "o": "anulare_dx", "l": "anulare_dx",
     # Mignolo destro: colonna destra + tasti accentati italiani
     "p": "mignolo_dx",
-    "è": "mignolo_dx", "ò": "mignolo_dx", "à": "mignolo_dx", "ù": "mignolo_dx",
+    "è": "mignolo_dx", "é": "mignolo_dx",
+    "à": "mignolo_dx", "ì": "mignolo_dx", "ò": "mignolo_dx", "ù": "mignolo_dx",
     # Pollici → barra spazio
     " ": "pollice",
 }
