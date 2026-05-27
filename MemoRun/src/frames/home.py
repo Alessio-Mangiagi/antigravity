@@ -31,6 +31,7 @@ class HomeFrame(ctk.CTkFrame):
         self._build_controls_bar()
         self._build_stats_cards()
         self._build_difficulty_buttons()
+        self._build_steno_button()
         self._build_finger_guide()
 
     def _build_title(self):
@@ -148,6 +149,31 @@ class HomeFrame(ctk.CTkFrame):
                 box, text="Inizia",
                 command=cmd,
             ).pack(pady=(0, 18), padx=28)
+
+    def _build_steno_button(self):
+        """Box modalità stenografica, separato dalle difficoltà standard."""
+        sep = ctk.CTkFrame(self, height=1, fg_color=("gray75", "gray30"))
+        sep.pack(fill="x", padx=60, pady=(10, 0))
+
+        ctk.CTkLabel(
+            self, text="Modalità avanzata",
+            font=ctk.CTkFont(size=13, weight="bold"), text_color="gray",
+        ).pack(pady=(8, 4))
+
+        box = ctk.CTkFrame(self, fg_color=("gray90", "gray15"))
+        box.pack(pady=(0, 6))
+        ctk.CTkLabel(
+            box, text="Stenografia  ·  10 tasti",
+            font=ctk.CTkFont(size=16, weight="bold"), text_color="#8e44ad",
+        ).pack(pady=(16, 3), padx=36)
+        ctk.CTkLabel(
+            box, text="Chord-based input  ·  A S D F G H J K L ▁",
+            font=ctk.CTkFont(size=11), text_color="gray",
+        ).pack(pady=(0, 10), padx=36)
+        ctk.CTkButton(
+            box, text="Inizia",
+            command=self.app.show_steno,
+        ).pack(pady=(0, 16), padx=36)
 
     def _build_finger_guide(self):
         """Griglia 2×4 con palette colori aggiornata (normale o daltonismo)."""

@@ -8,5 +8,6 @@ from .practice    import PracticeFrame
 from .result      import ResultFrame
 from .readme_view import ReadmeFrame
 from .custom_text import CustomTextFrame
+from .steno       import StenoFrame
 
-__all__ = ["HomeFrame", "PracticeFrame", "ResultFrame", "ReadmeFrame", "CustomTextFrame"]
+__all__ = ["HomeFrame", "PracticeFrame", "ResultFrame", "ReadmeFrame", "CustomTextFrame", "StenoFrame"]

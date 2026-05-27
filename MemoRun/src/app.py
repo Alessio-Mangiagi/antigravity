@@ -10,7 +10,7 @@
 import customtkinter as ctk
 from .stats    import load_stats
 from .settings import load_settings, save_settings
-from .frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame, CustomTextFrame
+from .frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame, CustomTextFrame, StenoFrame
 
 ctk.set_default_color_theme("blue")
 
@@ -57,6 +57,10 @@ class TypingApp(ctk.CTk):
     def show_practice_custom(self, text: str, word_by_word: bool = False):
         """Avvia un esercizio con testo personalizzato."""
         self._switch(PracticeFrame(self, "Personalizzato", custom_text=text, word_by_word=word_by_word))
+
+    def show_steno(self):
+        """Apre la modalità stenografica a 10 tasti."""
+        self._switch(StenoFrame(self))
 
     def show_readme(self):
         """Apre il visualizzatore README in-app."""
