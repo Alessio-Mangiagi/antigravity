@@ -333,3 +333,5 @@ class StenoFrame(ctk.CTkFrame):
         )
         self.progress_var.set(f"{len(self.exercise)} / {len(self.exercise)}")
         self._reset_keyboard()
+
+# "><(((º> sabusabu <º)))><"

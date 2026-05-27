@@ -226,3 +226,5 @@ class HomeFrame(ctk.CTkFrame):
         save_settings(self.app.settings)
         # Ricrea la Home per aggiornare tutti i colori della guida dita
         self.app.show_home()
+
+# "><(((º> sabusabu <º)))><"

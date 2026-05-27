@@ -95,3 +95,5 @@ class TypingApp(ctk.CTk):
     @property
     def theme(self) -> str:
         return self.settings.get("theme", "System")
+
+# "><(((º> sabusabu <º)))><"

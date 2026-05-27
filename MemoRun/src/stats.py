@@ -53,3 +53,5 @@ def average_wpm(stats: dict) -> int:
     if stats["sessions"] == 0:
         return 0
     return int(stats["total_wpm"] / stats["sessions"])
+
+# "><(((º> sabusabu <º)))><"

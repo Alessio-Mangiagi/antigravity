@@ -11,3 +11,5 @@ from .custom_text import CustomTextFrame
 from .steno       import StenoFrame
 
 __all__ = ["HomeFrame", "PracticeFrame", "ResultFrame", "ReadmeFrame", "CustomTextFrame", "StenoFrame"]
+
+# "><(((º> sabusabu <º)))><"

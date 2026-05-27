@@ -62,3 +62,5 @@ class CustomTextFrame(ctk.CTkFrame):
             return
         word_by_word = self.mode_seg.get() == "Parola per parola"
         self.app.show_practice_custom(text, word_by_word)
+
+# "><(((º> sabusabu <º)))><"

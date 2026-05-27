@@ -29,3 +29,5 @@ def save_settings(settings: dict) -> None:
     """Salva il dizionario delle preferenze nel file JSON."""
     with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
         json.dump(settings, f, indent=2)
+
+# "><(((º> sabusabu <º)))><"

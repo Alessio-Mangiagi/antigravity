@@ -413,3 +413,5 @@ class PracticeFrame(ctk.CTkFrame):
         save_stats(self.app.stats)
 
         self.after(300, lambda: self.app.show_result(wpm, acc, self.difficulty, self.text))
+
+# "><(((º> sabusabu <º)))><"

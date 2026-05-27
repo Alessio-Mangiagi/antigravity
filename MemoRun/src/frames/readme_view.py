@@ -132,3 +132,5 @@ class ReadmeFrame(ctk.CTkFrame):
     def _go_back(self):
         """Torna alla schermata di provenienza."""
         self.app.show_home()
+
+# "><(((º> sabusabu <º)))><"

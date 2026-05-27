@@ -176,3 +176,5 @@ class ResultFrame(ctk.CTkFrame):
         if self.wpm < 60:
             return "Ottimo risultato! Sei ad un buon livello. Continua e raggiungerai presto i 60 WPM."
         return "Eccellente! Sei un dattilografo esperto. Sfidati con testi piu difficili!"
+
+# "><(((º> sabusabu <º)))><"

@@ -427,3 +427,5 @@ KEY_FINGER = {
     # Pollici → barra spazio
     " ": "pollice",
 }
+
+# "><(((º> sabusabu <º)))><"
