@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="../immagini/Gemini_Generated_Image_9d24r09d24r09d24.png">
+  <link rel="icon" type="image/png" href="immagini/Gemini_Generated_Image_9d24r09d24r09d24.png">
 </head>
 <body>
 
@@ -22,8 +22,8 @@
   <nav>
     <div class="nav-inner">
       <a href="#" class="logo">
-        <img src="../immagini/Gemini_Generated_Image_9d24r09d24r09d24.png" class="logo-icon logo-icon--dark" alt="">
-        <img src="../immagini/Gemini_Generated_Image_9d24r09d24r09d24invertita.png" class="logo-icon logo-icon--light" alt="">
+        <img src="immagini/Gemini_Generated_Image_9d24r09d24r09d24.png" class="logo-icon logo-icon--dark" alt="">
+        <img src="immagini/Gemini_Generated_Image_9d24r09d24r09d24invertita.png" class="logo-icon logo-icon--light" alt="">
         Memorun
       </a>
       <a href="#download" class="btn-pill">Scarica gratis</a>
@@ -48,7 +48,8 @@
           </h1>
           <p class="hero-p hero-desc">
             Feedback carattere per carattere, tastiera visiva con guida dita,
-            statistiche in tempo reale. Ogni sessione ti rende più veloce.
+            statistiche in tempo reale. 4 livelli di difficoltà — anche testi personalizzati.
+            Ogni sessione ti rende più veloce.
           </p>
           <div class="cta-row hero-ctas">
             <a href="#download" class="btn-lg">Scarica per Windows</a>
@@ -72,11 +73,11 @@
     <div class="container">
       <div class="stats-grid">
         <div class="reveal">
-          <div class="stat-num" data-target="3">0</div>
+          <div class="stat-num" data-target="4">0</div>
           <div class="stat-lbl">livelli di difficoltà</div>
         </div>
         <div class="reveal d1">
-          <div class="stat-num" data-target="47" data-suffix="+">0</div>
+          <div class="stat-num" data-target="250" data-suffix="+">0</div>
           <div class="stat-lbl">testi di esercitazione</div>
         </div>
         <div class="reveal d2">
@@ -144,6 +145,26 @@
         </div>
       </div>
 
+      <!-- Feature 4: custom text -->
+      <div class="feat-row flip reveal d1">
+        <div class="feat-text">
+          <h3 class="feat-title">Testi personalizzati e modalità parola per parola</h3>
+          <p class="feat-desc">Incolla qualsiasi testo — un articolo, un codice sorgente, una poesia — e allenati su di esso. Attiva la modalità <strong>parola per parola</strong> per affrontare il testo un passo alla volta, concentrandoti sulla precisione prima della velocità.</p>
+        </div>
+        <div class="feat-visual">
+          <div class="stat-cards">
+            <div class="stat-card" style="min-width:120px">
+              <div class="sc-val" style="font-size:1.1rem;padding:8px 0">Testo<br>completo</div>
+              <div class="sc-lbl">modalità classica</div>
+            </div>
+            <div class="stat-card" style="min-width:120px">
+              <div class="sc-val" style="font-size:1.1rem;padding:8px 0">Parola<br>per parola</div>
+              <div class="sc-lbl">modalità focus</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -167,7 +188,7 @@
       <div class="cta-inner reveal">
         <h2 class="cta-h">Inizia oggi.</h2>
         <p class="cta-sub">Nessuna registrazione. Nessun abbonamento. Richiede Python 3.10+ e CustomTkinter.</p>
-        <div class="code-block">python main.py</div>
+        <div class="code-block">pip install -r requirements.txt &amp;&amp; python main.py</div>
         <a href="https://github.com/Alessio-Mangiagi/antigravity/tree/main/MemoRun" class="btn-lg">Scarica da GitHub</a>
       </div>
     </div>

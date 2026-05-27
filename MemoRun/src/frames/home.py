@@ -36,7 +36,7 @@ class HomeFrame(ctk.CTkFrame):
     def _build_title(self):
         """Titolo e sottotitolo centrati in cima."""
         ctk.CTkLabel(
-            self, text="Memorun",
+            self, text="MemoRun",
             font=ctk.CTkFont(size=34, weight="bold"),
         ).pack(pady=(30, 4))
         ctk.CTkLabel(

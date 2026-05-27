@@ -16,10 +16,27 @@ python main.py
 
 ## Come si usa
 
-1. Scegli la **difficoltà** dalla schermata iniziale (Facile / Medio / Difficile)
+1. Scegli la **difficoltà** dalla schermata iniziale (Facile / Medio / Difficile / Personalizzato)
 2. Digita il testo mostrato nel riquadro superiore
 3. Il **timer parte automaticamente** al primo tasto premuto
 4. Completa il testo per vedere WPM, precisione e confronto con il record
+
+---
+
+## Livelli di difficoltà
+
+| Livello       | Testi                                | Caratteristiche              |
+|---------------|--------------------------------------|------------------------------|
+| Facile        | Frasi brevi (5–8 parole)             | Vocabolario semplice         |
+| Medio         | Frasi complete (8–14 parole)         | Linguaggio più articolato    |
+| Difficile     | Testi lunghi (20+ parole)            | Frasi complesse e tecniche   |
+| Personalizzato | Il tuo testo (lunghezza libera)     | Incolla qualsiasi contenuto  |
+
+### Modalità Parola per Parola
+
+Nella modalità **Personalizzato** puoi scegliere tra:
+- **Testo completo** — vedi l'intero testo e scrivi tutto di fila
+- **Parola per parola** — compare una parola alla volta, premi Spazio per passare alla successiva
 
 ---
 
@@ -30,7 +47,7 @@ python main.py
 | Corretto        | Verde          | Celeste (#56B4E9) |
 | Errato          | Rosso          | Arancione (#FE6100) |
 | Posizione attuale (cursore) | Blu | Giallo (#F0E442) |
-| Non ancora raggiunto | Grigio | Grigio |
+| Non ancora raggiunto | Colore del dito | Colore del dito |
 
 ---
 
@@ -39,17 +56,17 @@ python main.py
 Ogni dito è responsabile di **colonne fisse** della tastiera.  
 Il tasto successivo da premere viene **evidenziato** sulla tastiera visiva.
 
-| Dito              | Tasti assegnati          |
-|-------------------|--------------------------|
-| Mignolo sinistro  | Q · A · Z                |
-| Anulare sinistro  | W · S · X                |
-| Medio sinistro    | E · D · C                |
-| Indice sinistro   | R · F · V  e  T · G · B |
-| Indice destro     | Y · H · N  e  U · J · M |
-| Medio destro      | I · K                    |
-| Anulare destro    | O · L                    |
-| Mignolo destro    | P                        |
-| Pollici           | Barra spazio             |
+| Dito              | Tasti assegnati                  |
+|-------------------|----------------------------------|
+| Mignolo sinistro  | Q · A · Z                       |
+| Anulare sinistro  | W · S · X                       |
+| Medio sinistro    | E · D · C                       |
+| Indice sinistro   | R · F · V  e  T · G · B         |
+| Indice destro     | Y · H · N  e  U · J · M         |
+| Medio destro      | I · K                           |
+| Anulare destro    | O · L                           |
+| Mignolo destro    | P · à · è · ì · ò · ù           |
+| Pollici           | Barra spazio                    |
 
 ### Regole fondamentali
 
@@ -71,11 +88,13 @@ Salvate automaticamente in `~/.memorun_stats.json` dopo ogni esercizio completat
 | `total_wpm`    | Somma dei WPM (usata per calcolare la media)     |
 | `total_chars`  | Totale caratteri digitati in tutti gli esercizi  |
 
+Puoi **azzerare le statistiche** dalla home: clicca il pulsante "Azzera statistiche" e digita `RESET` nella finestra di conferma.
+
 ---
 
 ## Modalità Daltonismo
 
-Attivabile con l'interruttore **"Modalita Daltonismo"** nella schermata iniziale.
+Attivabile con l'interruttore **"Modalità Daltonismo"** nella schermata iniziale.
 
 Usa la palette **Okabe-Ito**, progettata per essere distinguibile da persone con:
 - **Deuteranopia** (difficoltà a distinguere rosso-verde, la più comune)
@@ -83,6 +102,21 @@ Usa la palette **Okabe-Ito**, progettata per essere distinguibile da persone con
 
 La palette sostituisce verde→celeste e rosso→arancione sia nella tastiera visiva che nel feedback di digitazione.  
 L'impostazione viene **salvata automaticamente** e ricordata alle sessioni successive.
+
+---
+
+## Tema
+
+Selezionabile dalla home con il pulsante segmentato **Chiaro / Scuro / Sistema**.  
+La scelta viene salvata e applicata all'avvio successivo.
+
+---
+
+## Scorciatoie da tastiera
+
+| Tasto    | Azione                              |
+|----------|-------------------------------------|
+| `Escape` | Torna alla schermata iniziale       |
 
 ---
 
@@ -104,19 +138,22 @@ L'impostazione viene **salvata automaticamente** e ricordata alle sessioni succe
 
 ```
 ├── main.py            # Entry point
-├── app.py             # Finestra principale + navigazione
-├── config.py          # Testi, layout tastiera, colori dita
-├── settings.py        # Preferenze utente (daltonismo, ecc.)
-├── stats.py           # Caricamento/salvataggio statistiche
-├── README.md          # Questo file
-├── frames/
-│   ├── home.py        # Schermata iniziale
-│   ├── practice.py    # Esercizio di digitazione
-│   ├── result.py      # Risultati post-esercizio
-│   ├── custom_text.py # Inserimento testo personalizzato
-│   └── readme_view.py # Visualizzatore README in-app
-└── sito/
-    ├── landing.html   # Landing page
-    ├── style.css      # Stili
-    └── main.js        # Animazioni e interazioni
+├── src/
+│   ├── app.py         # Finestra principale + navigazione
+│   ├── config.py      # Testi (~290), layout tastiera, colori dita
+│   ├── settings.py    # Preferenze utente (daltonismo, tema)
+│   ├── stats.py       # Caricamento/salvataggio statistiche
+│   └── frames/
+│       ├── home.py        # Schermata iniziale
+│       ├── practice.py    # Esercizio di digitazione
+│       ├── result.py      # Risultati post-esercizio
+│       ├── custom_text.py # Inserimento testo personalizzato
+│       └── readme_view.py # Visualizzatore README in-app
+├── sito/
+│   ├── landing.html   # Landing page
+│   ├── style.css      # Stili
+│   └── main.js        # Animazioni e interazioni
+├── immagini/          # Logo e risorse grafiche
+├── requirements.txt
+└── README.md
 ```
