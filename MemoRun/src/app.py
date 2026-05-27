@@ -7,10 +7,15 @@
 # Per aggiungere una nuova schermata: aggiungi un metodo show_* e importa il Frame.
 # =============================================================================
 
+import os
+import tkinter as tk
 import customtkinter as ctk
+from PIL import Image, ImageTk
 from .stats    import load_stats
 from .settings import load_settings, save_settings
 from .frames   import HomeFrame, PracticeFrame, ResultFrame, ReadmeFrame, CustomTextFrame, StenoFrame
+
+_BG_IMG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "immagini", "sfondo_app.png")
 
 ctk.set_default_color_theme("blue")
 
@@ -27,6 +32,11 @@ class TypingApp(ctk.CTk):
 
         self.stats    = load_stats()
         self.settings = load_settings()
+
+        try:
+            self._bg_img_orig = Image.open(_BG_IMG_PATH)
+        except Exception:
+            self._bg_img_orig = None
 
         ctk.set_appearance_mode(self.settings.get("theme", "System"))
         self._update_bg()
@@ -72,6 +82,27 @@ class TypingApp(ctk.CTk):
             self.current_frame.destroy()
         self.current_frame = frame
         self.current_frame.pack(fill="both", expand=True)
+        if self._bg_img_orig:
+            self._inject_bg(frame)
+
+    def _inject_bg(self, frame: ctk.CTkFrame):
+        """Inietta l'immagine di sfondo nel frame, ridimensionandola dinamicamente."""
+        lbl = tk.Label(frame, bd=0, highlightthickness=0)
+        lbl.place(relx=0, rely=0, relwidth=1, relheight=1)
+        lbl.lower()
+
+        def _resize(event=None):
+            w = frame.winfo_width()
+            h = frame.winfo_height()
+            if w < 2 or h < 2:
+                return
+            img = self._bg_img_orig.resize((w, h), Image.LANCZOS)
+            photo = ImageTk.PhotoImage(img)
+            lbl.configure(image=photo)
+            lbl._photo = photo
+
+        frame.bind("<Configure>", lambda e: _resize(), add="+")
+        self.after(50, _resize)
 
     _BG = {"Light": "#cce8f4", "Dark": "#09090b"}
 
