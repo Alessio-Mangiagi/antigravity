@@ -5,8 +5,8 @@
   --bg-2:     #090916;
   --bg-3:     #101028;
   --border:   #1e1e42;
-  --muted:    #45456a;
-  --sub:      #7878a8;
+  --muted:    #7070a0;
+  --sub:      #aaaacc;
   --text:     #d4d4f0;
   --accent:   #00f5d4;
   --accent-l: #7affea;
@@ -24,7 +24,7 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Rajdhani', system-ui, sans-serif;
   background:
-    linear-gradient(rgba(4,4,16,.74), rgba(4,4,16,.74)),
+    linear-gradient(rgba(4,4,16,.82), rgba(4,4,16,.82)),
     url('immagini/sfondo_app.png') center/cover fixed;
   color: var(--text);
   min-height: 100dvh;
@@ -276,6 +276,7 @@ h1 .dim {
   line-height: 1.75; max-width: 50ch;
   margin-bottom: 36px;
   font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0,0,0,.9);
 }
 
 .cta-row {
@@ -428,6 +429,7 @@ h1 .dim {
   font-size: 15px; color: var(--sub);
   line-height: 1.7; max-width: 55ch;
   font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0,0,0,.9);
 }
 
 .feat-row {
@@ -457,6 +459,7 @@ h1 .dim {
   font-size: 15px; color: var(--sub);
   line-height: 1.8; max-width: 52ch;
   font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0,0,0,.9);
 }
 
 /* ── Text preview ───────────────────────────────────────────────────────── */
@@ -538,6 +541,7 @@ h1 .dim {
 .a11y-desc {
   font-size: 14px; color: var(--sub); line-height: 1.8;
   font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0,0,0,.9);
 }
 
 .palette-swatches {
@@ -574,6 +578,7 @@ h1 .dim {
   font-size: 15px; color: var(--sub);
   margin-bottom: 24px; line-height: 1.7;
   font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0,0,0,.9);
 }
 
 .code-block {
