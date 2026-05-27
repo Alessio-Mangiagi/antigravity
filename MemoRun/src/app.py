@@ -20,7 +20,7 @@ class TypingApp(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.title("Memorun")
+        self.title("MenmoRun")
         self.geometry("1050x780")
         self.minsize(900, 700)
         self.resizable(True, True)

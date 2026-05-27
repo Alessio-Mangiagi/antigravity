@@ -1,4 +1,4 @@
-# Memorun
+# MenmoRun
 
 App per imparare la tecnica delle **10 dita** sulla tastiera QWERTY italiana.  
 Costruita con Python + CustomTkinter.

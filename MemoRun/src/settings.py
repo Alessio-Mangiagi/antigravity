@@ -8,7 +8,7 @@
 import json
 from pathlib import Path
 
-SETTINGS_FILE = Path.home() / ".memorun_settings.json"
+SETTINGS_FILE = Path.home() / ".menmorun_settings.json"
 
 _DEFAULTS = {
     "colorblind_mode": False,
