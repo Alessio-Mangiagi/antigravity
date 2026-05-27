@@ -190,6 +190,16 @@ nav {
 }
 .btn-pill:active { transform: scale(.96) translateY(1px); }
 
+.btn-pill--app {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--glow), inset 0 0 12px rgba(0,245,212,.03);
+}
+.btn-pill--app:hover {
+  background: rgba(0,245,212,.08);
+  box-shadow: 0 0 22px var(--glow), inset 0 0 18px rgba(0,245,212,.08);
+}
+
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 
 .hero {
