@@ -49,6 +49,8 @@
           <p class="hero-p hero-desc">
             Feedback carattere per carattere, tastiera visiva con guida dita,
             statistiche in tempo reale. 4 livelli di difficoltà — anche testi personalizzati.
+            E una modalità <strong style="color:var(--accent-3)">stenografica a 10 tasti</strong>:
+            premi più tasti insieme e produci parole intere con un solo chord.
             Ogni sessione ti rende più veloce.
           </p>
           <div class="cta-row hero-ctas">
@@ -73,16 +75,16 @@
     <div class="container">
       <div class="stats-grid">
         <div class="reveal">
-          <div class="stat-num" data-target="4">0</div>
-          <div class="stat-lbl">livelli di difficoltà</div>
+          <div class="stat-num" data-target="5">0</div>
+          <div class="stat-lbl">modalità di allenamento</div>
         </div>
         <div class="reveal d1">
           <div class="stat-num" data-target="250" data-suffix="+">0</div>
           <div class="stat-lbl">testi di esercitazione</div>
         </div>
         <div class="reveal d2">
-          <div class="stat-num" data-target="10">0</div>
-          <div class="stat-lbl">dita tracciate in real-time</div>
+          <div class="stat-num" data-target="42" data-suffix="+">0</div>
+          <div class="stat-lbl">chord stenografici</div>
         </div>
       </div>
     </div>
@@ -161,6 +163,21 @@
               <div class="sc-val" style="font-size:1.1rem;padding:8px 0">Parola<br>per parola</div>
               <div class="sc-lbl">modalità focus</div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 5: steno mode -->
+      <div class="feat-row reveal">
+        <div class="feat-text">
+          <h3 class="feat-title">Modalità stenografica · 10 tasti</h3>
+          <p class="feat-desc">Smetti di premere un tasto alla volta. Con il <strong>chord-based input</strong>, premi più tasti della home row contemporaneamente per produrre una parola intera. <code>A+D</code> → "il", <code>G+H+J</code> → "nella", <code>F+H+L</code> → "tutto". 42 chord per le parole italiane più frequenti — misura i tuoi <strong>chord al minuto</strong>.</p>
+        </div>
+        <div class="feat-visual">
+          <div class="steno-wrap">
+            <div class="steno-word" id="steno-word">il</div>
+            <div class="steno-row" id="steno-row"></div>
+            <div class="steno-hint" id="steno-hint">A + D</div>
           </div>
         </div>
       </div>

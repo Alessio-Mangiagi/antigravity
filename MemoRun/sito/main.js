@@ -152,6 +152,56 @@ const revealObs = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
+/* ── Steno chord demo ───────────────────────────────────────────────────── */
+
+const STENO_DEMO = [
+  { word: 'il',     keys: ['a', 'd'],         hint: 'A + D' },
+  { word: 'la',     keys: ['j', 'k'],         hint: 'J + K' },
+  { word: 'che',    keys: ['g', 'h'],         hint: 'G + H' },
+  { word: 'non',    keys: ['s', 'k'],         hint: 'S + K' },
+  { word: 'nella',  keys: ['g', 'h', 'j'],   hint: 'G + H + J' },
+  { word: 'tutto',  keys: ['f', 'h', 'l'],   hint: 'F + H + L' },
+  { word: 'quando', keys: ['a', 'k', 'l'],   hint: 'A + K + L' },
+  { word: 'di',     keys: ['d', 'f'],         hint: 'D + F' },
+  { word: 'anche',  keys: ['g', 'j', 'k'],   hint: 'G + J + K' },
+  { word: 'più',    keys: ['a', 'f', 'j'],   hint: 'A + F + J' },
+];
+
+const STENO_HOME_ROW = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
+
+const stenoRowEl  = document.getElementById('steno-row');
+const stenoWordEl = document.getElementById('steno-word');
+const stenoHintEl = document.getElementById('steno-hint');
+
+if (stenoRowEl && stenoWordEl && stenoHintEl) {
+  const stenoKeyEls = {};
+  STENO_HOME_ROW.forEach(k => {
+    const el = document.createElement('div');
+    el.className = 'steno-key';
+    el.textContent = k.toUpperCase();
+    stenoRowEl.appendChild(el);
+    stenoKeyEls[k] = el;
+  });
+
+  let stenoIdx = 0;
+
+  function showStenoChord() {
+    const { word, keys, hint } = STENO_DEMO[stenoIdx % STENO_DEMO.length];
+    stenoIdx++;
+
+    STENO_HOME_ROW.forEach(k => stenoKeyEls[k].classList.remove('active'));
+    stenoWordEl.textContent = word;
+    stenoHintEl.textContent = hint;
+
+    setTimeout(() => {
+      keys.forEach(k => { if (stenoKeyEls[k]) stenoKeyEls[k].classList.add('active'); });
+    }, 160);
+  }
+
+  showStenoChord();
+  setInterval(showStenoChord, 1900);
+}
+
 /* ── Stat counters ──────────────────────────────────────────────────────── */
 
 document.querySelectorAll('[data-target]').forEach(el => {

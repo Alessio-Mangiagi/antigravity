@@ -638,3 +638,57 @@ footer {
 .sc-wpm  { color: #ffbc42; text-shadow: 0 0 18px rgba(255,188,66,.45); }
 .sc-acc  { color: var(--accent-l); text-shadow: 0 0 18px var(--glow); }
 .sc-time { color: #8db7ff; text-shadow: 0 0 18px rgba(141,183,255,.45); }
+
+/* ── Steno demo ─────────────────────────────────────────────────────────── */
+
+.steno-wrap {
+  background: var(--mono-bg);
+  border: 1px solid rgba(168,85,247,.25);
+  border-radius: 5px;
+  padding: 32px 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  box-shadow: 0 0 28px rgba(168,85,247,.08), inset 0 0 28px rgba(0,0,30,.4);
+}
+
+.steno-word {
+  font-family: 'Orbitron', monospace;
+  font-size: 46px; font-weight: 900;
+  letter-spacing: .04em;
+  color: var(--accent-3);
+  text-shadow: 0 0 22px var(--glow-3);
+  transition: opacity .18s;
+  min-height: 56px;
+}
+
+.steno-row {
+  display: flex; gap: 6px;
+}
+
+.steno-key {
+  width: 46px; height: 46px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  color: var(--muted);
+  transition: background .2s cubic-bezier(.16,1,.3,1),
+              color .2s,
+              box-shadow .2s,
+              transform .15s cubic-bezier(.16,1,.3,1);
+}
+
+.steno-key.active {
+  background: var(--accent-3);
+  color: #fff;
+  box-shadow: 0 0 16px var(--glow-3);
+  transform: scale(.91);
+}
+
+.steno-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--sub);
+  letter-spacing: .08em;
+  min-height: 18px;
+}

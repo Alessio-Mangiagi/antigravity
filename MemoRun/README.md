@@ -40,6 +40,42 @@ Nella modalità **Personalizzato** puoi scegliere tra:
 
 ---
 
+## Modalità Stenografica a 10 tasti
+
+Accessibile dal pulsante **Stenografia** nella home, nella sezione *Modalità avanzata*.
+
+Invece di premere un tasto alla volta, devi premere più tasti **contemporaneamente** (chord) per produrre una parola intera. La risoluzione avviene al rilascio dell'ultimo tasto.
+
+**I 10 tasti usati:** la home row `A S D F G H J K L` + `SPAZIO`
+
+### Campione di chord
+
+| Chord (tasti simultanei) | Parola prodotta |
+|--------------------------|-----------------|
+| `A + D`                  | il              |
+| `J + K`                  | la              |
+| `D + F`                  | di              |
+| `G + H`                  | che             |
+| `S + K`                  | non             |
+| `D + H`                  | per             |
+| `F + K`                  | con             |
+| `A + S + D`              | alla            |
+| `G + H + J`              | nella           |
+| `J + K + L`              | sono            |
+| `D + G + K`              | questo          |
+| `F + H + L`              | tutto           |
+| `G + H + J`              | nella           |
+| `A + K + L`              | quando          |
+
+Il dizionario completo contiene **42 chord** per le parole italiane più frequenti.
+
+### Statistiche stenografiche
+
+Le statistiche mostrano **Chord / min** (chord corretti al minuto) e **Precisione %**.  
+Il feedback è immediato: verde per chord corretto, rosso con lampeggio per chord errato (mostra quale parola avresti prodotto).
+
+---
+
 ## Feedback visivo durante la digitazione
 
 | Stato carattere | Colore normale | Colore daltonismo |
@@ -148,12 +184,12 @@ La scelta viene salvata e applicata all'avvio successivo.
 │       ├── practice.py    # Esercizio di digitazione
 │       ├── result.py      # Risultati post-esercizio
 │       ├── custom_text.py # Inserimento testo personalizzato
+│       ├── steno.py       # Modalità stenografica a 10 tasti (chord-based)
 │       └── readme_view.py # Visualizzatore README in-app
 ├── sito/
-│   ├── landing.html   # Landing page
+│   ├── index.html     # Landing page
 │   ├── style.css      # Stili
 │   └── main.js        # Animazioni e interazioni
-├── immagini/          # Logo e risorse grafiche
 ├── requirements.txt
 └── README.md
 ```
