@@ -12,7 +12,7 @@ set SCRIPT_PATH=%~dp0avvia_nascosto.vbs
 
 :: Crea VBScript per avvio silenzioso (nessuna finestra cmd)
 echo Set oShell = CreateObject("WScript.Shell") > "%SCRIPT_PATH%"
-echo oShell.Run "cmd /c cd /d ""%~dp0"" && node index.js", 0, False >> "%SCRIPT_PATH%"
+echo oShell.Run "cmd /c cd /d ""%~dp0"" && node server.js", 0, False >> "%SCRIPT_PATH%"
 
 :: Registra task scheduler al login utente
 schtasks /create /tn "%TASK_NAME%" /tr "wscript.exe \"%SCRIPT_PATH%\"" /sc onlogon /ru "%USERNAME%" /f

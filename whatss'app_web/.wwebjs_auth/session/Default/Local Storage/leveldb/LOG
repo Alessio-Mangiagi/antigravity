@@ -1,2 +1,3 @@
-2026/05/29-12:15:42.916 5c38 Creating DB C:\Users\aless\Desktop\Progetti_antigravity\whatss'app_web\.wwebjs_auth\session\Default\Local Storage\leveldb since it was missing.
-2026/05/29-12:15:42.935 5c38 Reusing MANIFEST C:\Users\aless\Desktop\Progetti_antigravity\whatss'app_web\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2026/05/29-12:31:04.961 9450 Reusing MANIFEST C:\Users\aless\Desktop\Progetti_antigravity\whatss'app_web\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2026/05/29-12:31:04.966 9450 Recovering log #3
+2026/05/29-12:31:04.968 9450 Reusing old log C:\Users\aless\Desktop\Progetti_antigravity\whatss'app_web\.wwebjs_auth\session\Default\Local Storage\leveldb/000003.log 

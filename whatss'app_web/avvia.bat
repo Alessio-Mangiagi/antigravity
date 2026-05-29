@@ -1,8 +1,10 @@
 @echo off
 cd /d "%~dp0"
 echo Avvio WhatsApp Auguri...
+echo Interfaccia web: http://localhost:3000
 echo.
-node index.js
+start "" http://localhost:3000
+node server.js
 echo.
-echo === Programma terminato ===
+echo === Server terminato ===
 pause

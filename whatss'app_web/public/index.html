@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Auguri</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --wa: #25D366;
+        --wa-dark: #128C7E;
+        --bg: #0b141a;
+        --card: #1f2c34;
+        --card2: #2a3942;
+        --text: #e9edef;
+        --muted: #8696a0;
+        --ok: #25D366;
+        --err: #f15c6d;
+        --warn: #f5b942;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 24px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    header {
+        display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+    }
+    header .logo {
+        width: 48px; height: 48px; border-radius: 12px;
+        background: var(--wa); display: grid; place-items: center; font-size: 26px;
+    }
+    header h1 { font-size: 22px; font-weight: 600; }
+    header p { color: var(--muted); font-size: 13px; }
+
+    .grid {
+        display: grid; grid-template-columns: 360px 1fr; gap: 20px;
+    }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+        background: var(--card); border-radius: 16px; padding: 20px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .card h2 {
+        font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;
+        color: var(--muted); margin-bottom: 14px; font-weight: 600;
+    }
+
+    /* Stato badge */
+    .badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    }
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .badge.connesso { background: rgba(37,211,102,0.15); color: var(--ok); }
+    .badge.connesso .dot { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+    .badge.qr, .badge.caricamento, .badge.avvio { background: rgba(245,185,66,0.15); color: var(--warn); }
+    .badge.qr .dot, .badge.caricamento .dot, .badge.avvio .dot { background: var(--warn); }
+    .badge.errore, .badge.disconnesso { background: rgba(241,92,109,0.15); color: var(--err); }
+    .badge.errore .dot, .badge.disconnesso .dot { background: var(--err); }
+
+    /* QR */
+    .qr-box { text-align: center; margin-top: 16px; }
+    .qr-box img { width: 100%; max-width: 280px; border-radius: 12px; background: #fff; padding: 10px; }
+    .qr-hint { color: var(--muted); font-size: 13px; margin-top: 12px; line-height: 1.5; }
+
+    .progress { height: 8px; background: var(--card2); border-radius: 999px; overflow: hidden; margin-top: 14px; }
+    .progress > div { height: 100%; background: var(--wa); transition: width 0.3s; }
+
+    /* Liste */
+    .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+    .info-row:last-child { border: none; }
+    .info-row .val { color: var(--wa); font-weight: 600; }
+
+    .person { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .person:last-child { border: none; }
+    .person .av { width: 38px; height: 38px; border-radius: 50%; background: var(--wa-dark); display: grid; place-items: center; font-weight: 600; }
+    .person .nome { font-weight: 600; }
+    .person .data { color: var(--muted); font-size: 12px; }
+    .empty { color: var(--muted); font-size: 14px; padding: 12px 0; text-align: center; }
+
+    /* Anteprima messaggio (bolla WhatsApp) */
+    .bubble {
+        background: #005c4b; padding: 12px 14px; border-radius: 10px 10px 10px 2px;
+        white-space: pre-wrap; font-size: 14px; line-height: 1.5; max-width: 90%;
+        position: relative; word-break: break-word;
+    }
+    .bubble-wrap { background: #0b141a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23ffffff08'/%3E%3C/svg%3E"); padding: 16px; border-radius: 12px; }
+
+    /* Pulsanti */
+    .btn {
+        border: none; border-radius: 10px; padding: 12px 18px; font-size: 14px;
+        font-weight: 600; cursor: pointer; transition: filter 0.2s, opacity 0.2s;
+        display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn:hover { filter: brightness(1.1); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-primary { background: var(--wa); color: #04221a; }
+    .btn-ghost { background: var(--card2); color: var(--text); }
+    .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+    /* Log */
+    .log {
+        background: #0d1418; border-radius: 10px; padding: 12px; height: 240px;
+        overflow-y: auto; font-family: 'Consolas', monospace; font-size: 12px; line-height: 1.6;
+    }
+    .log .l { display: flex; gap: 8px; }
+    .log .t { color: var(--muted); flex-shrink: 0; }
+    .log .ok { color: var(--ok); }
+    .log .errore { color: var(--err); }
+    .log .info { color: var(--text); }
+
+    .toast {
+        position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+        background: var(--card2); padding: 12px 24px; border-radius: 10px; font-weight: 600;
+        transition: transform 0.3s; box-shadow: 0 8px 30px rgba(0,0,0,0.4); z-index: 100;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.ok { border-left: 4px solid var(--ok); }
+    .toast.err { border-left: 4px solid var(--err); }
+
+    .col { display: flex; flex-direction: column; gap: 20px; }
+    .config-path { font-size: 11px; color: var(--muted); word-break: break-all; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div class="logo">🎂</div>
+        <div>
+            <h1>WhatsApp Auguri</h1>
+            <p id="dataOggi"></p>
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- Colonna sinistra: connessione -->
+        <div class="col">
+            <div class="card">
+                <h2>Stato connessione</h2>
+                <span id="badge" class="badge avvio"><span class="dot"></span><span id="badgeText">Avvio...</span></span>
+                <div id="qrArea"></div>
+                <div id="progArea"></div>
+            </div>
+
+            <div class="card">
+                <h2>Configurazione</h2>
+                <div class="info-row"><span>Gruppo destinazione</span><span class="val" id="cfgGruppo">—</span></div>
+                <div class="info-row" style="display:block; border:none;">
+                    <span>File Excel</span>
+                    <div class="config-path" id="cfgExcel">—</div>
+                </div>
+                <div class="info-row"><span>Gruppo trovato su WhatsApp</span><span class="val" id="cfgTrovato">—</span></div>
+            </div>
+        </div>
+
+        <!-- Colonna destra: dati + azioni -->
+        <div class="col">
+            <div class="card">
+                <h2>Compleanni di oggi</h2>
+                <div id="festeggiati"><div class="empty">Caricamento...</div></div>
+            </div>
+
+            <div class="card">
+                <h2>Dati caricati</h2>
+                <div class="info-row"><span>Persone in rubrica</span><span class="val" id="numPersone">—</span></div>
+                <div class="info-row"><span>Frasi singole</span><span class="val" id="numSingole">—</span></div>
+                <div class="info-row"><span>Frasi di gruppo</span><span class="val" id="numGruppo">—</span></div>
+            </div>
+
+            <div class="card">
+                <h2>Anteprima messaggio</h2>
+                <div id="anteprimaArea"><div class="empty">Nessun compleanno oggi.</div></div>
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="btnInvia" disabled>📤 Invia auguri ora</button>
+                    <button class="btn btn-ghost" id="btnRicarica">🔄 Ricarica dati</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Log attività</h2>
+                <div class="log" id="log"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const $ = id => document.getElementById(id);
+
+    $('dataOggi').textContent = new Date().toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    const etichette = {
+        avvio: 'Avvio...', qr: 'In attesa scansione QR', caricamento: 'Caricamento...',
+        connesso: 'Connesso', errore: 'Errore', disconnesso: 'Disconnesso'
+    };
+
+    socket.on('config', cfg => {
+        $('cfgGruppo').textContent = cfg.gruppo;
+        $('cfgExcel').textContent = cfg.excel;
+    });
+
+    socket.on('stato', s => {
+        // badge
+        const b = $('badge');
+        b.className = 'badge ' + s.connessione;
+        $('badgeText').textContent = etichette[s.connessione] || s.connessione;
+
+        // QR
+        if (s.connessione === 'qr' && s.qrDataUrl) {
+            $('qrArea').innerHTML = `<div class="qr-box">
+                <img src="${s.qrDataUrl}" alt="QR">
+                <div class="qr-hint">Apri WhatsApp sul telefono →<br>Impostazioni → Dispositivi collegati → Collega un dispositivo</div>
+            </div>`;
+        } else {
+            $('qrArea').innerHTML = '';
+        }
+
+        // progress
+        if (s.connessione === 'caricamento') {
+            $('progArea').innerHTML = `<div class="progress"><div style="width:${s.caricamento}%"></div></div>`;
+        } else {
+            $('progArea').innerHTML = '';
+        }
+
+        // config trovato
+        $('cfgTrovato').textContent = s.gruppoTrovato || (s.connessione === 'connesso' ? '❌ non trovato' : '—');
+        $('cfgTrovato').style.color = s.gruppoTrovato ? 'var(--wa)' : 'var(--err)';
+
+        // dati
+        if (s.dati) {
+            $('numPersone').textContent = s.dati.persone.length;
+            $('numSingole').textContent = s.dati.frasiSingole.length;
+            $('numGruppo').textContent = s.dati.frasiGruppo.length;
+        }
+
+        // festeggiati
+        if (s.festeggiati && s.festeggiati.length) {
+            $('festeggiati').innerHTML = s.festeggiati.map(f => `
+                <div class="person">
+                    <div class="av">${f.nome.charAt(0)}</div>
+                    <div><div class="nome">${f.nome}</div><div class="data">🎂 ${f.data}</div></div>
+                </div>`).join('');
+        } else {
+            $('festeggiati').innerHTML = '<div class="empty">Nessun compleanno oggi 🎈</div>';
+        }
+
+        // anteprima
+        if (s.anteprima) {
+            $('anteprimaArea').innerHTML = `<div class="bubble-wrap"><div class="bubble">${escapeHtml(s.anteprima)}</div></div>`;
+        } else {
+            $('anteprimaArea').innerHTML = '<div class="empty">Nessun compleanno oggi.</div>';
+        }
+
+        // pulsante invio
+        $('btnInvia').disabled = !(s.connessione === 'connesso' && s.gruppoTrovato && s.anteprima);
+    });
+
+    socket.on('log', r => {
+        const el = $('log');
+        const div = document.createElement('div');
+        div.className = 'l';
+        div.innerHTML = `<span class="t">${r.ts}</span><span class="${r.tipo}">${escapeHtml(r.msg)}</span>`;
+        el.appendChild(div);
+        el.scrollTop = el.scrollHeight;
+    });
+
+    socket.on('risultatoInvio', res => {
+        toast(res.msg, res.ok);
+        $('btnInvia').disabled = false;
+    });
+
+    $('btnInvia').addEventListener('click', () => {
+        $('btnInvia').disabled = true;
+        socket.emit('invia');
+    });
+    $('btnRicarica').addEventListener('click', () => socket.emit('ricarica'));
+
+    function toast(msg, ok) {
+        const t = $('toast');
+        t.textContent = msg;
+        t.className = 'toast show ' + (ok ? 'ok' : 'err');
+        setTimeout(() => t.className = 'toast', 3000);
+    }
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    }
+</script>
+</body>
+</html>

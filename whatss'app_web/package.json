@@ -1,15 +1,19 @@
 {
   "name": "whatsapp-auguri",
-  "version": "1.0.0",
-  "description": "Invia auguri di compleanno automatici su WhatsApp",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Invia auguri di compleanno automatici su WhatsApp con interfaccia web",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
+    "cli": "node index.js",
     "template": "node create-template.js"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
+    "express": "^4.22.2",
+    "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0",
+    "socket.io": "^4.8.3",
     "whatsapp-web.js": "^1.23.0"
   }
 }
