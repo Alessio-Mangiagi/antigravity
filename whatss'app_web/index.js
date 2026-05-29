@@ -9,7 +9,7 @@ const CONFIG = {
 
     // ⚠ IMPOSTA QUI: nome ESATTO del gruppo WhatsApp dove inviare gli auguri
     // (maiuscole/minuscole non contano, ma il nome deve corrispondere)
-    GRUPPO_DESTINAZIONE: 'NOME_DEL_TUO_GRUPPO',
+    GRUPPO_DESTINAZIONE: 'Prova',
 
     // Nomi dei fogli nel file Excel
     FOGLIO_COMPLEANNI: 'Compleanni',
